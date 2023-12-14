@@ -16,9 +16,9 @@ class BinarySearchTree {
   }
 
   add(data) {
-    this.rootNode = insert(this.rootNode, data);
+    this.rootNode = insertNode(this.rootNode, data);
 
-    function insert(node, data) {
+    function insertNode(node, data) {
       if (!node) {
         return new Node(data);
       }
@@ -28,9 +28,9 @@ class BinarySearchTree {
       }
 
       if (data < node.data) {
-        node.left = insert(node.left, data);
+        node.left = insertNode(node.left, data);
       } else {
-        node.right = insert(node.right, data);
+        node.right = insertNode(node.right, data);
       }
 
       return node;
@@ -77,9 +77,50 @@ class BinarySearchTree {
     }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    this.rootNode = removeNodeFromSubtree(this.rootNode, data);
+
+    function removeNodeFromSubtree(node, data) {
+      if (!node) {
+        return null;
+      }
+
+      if (data === node.data) {
+        if (!node.left && !node.right) {
+          return null;
+        }
+
+        if (!node.left) {
+          node = node.right;
+          return node;
+        }
+
+        if (!node.right) {
+          node = node.left;
+          return node;
+        }
+
+        node.data = minNode(node.right);
+        node.right = removeNodeFromSubtree(node.right, node.data);
+        return node;
+
+        function minNode(node) {
+          if (!node.left) {
+            return node.data;
+          }
+
+          return minNode(node.left);
+        }
+      }
+
+      if (data < node.data) {
+        node.left = removeNodeFromSubtree(node.left, data);
+      } else {
+        node.right = removeNodeFromSubtree(node.right, data);
+      }
+
+      return node;
+    }
   }
 
   min() {
