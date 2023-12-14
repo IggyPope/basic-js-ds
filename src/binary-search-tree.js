@@ -140,8 +140,19 @@ class BinarySearchTree {
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.rootNode) {
+      return null;
+    }
+
+    return maxNode(this.rootNode);
+
+    function maxNode(node) {
+      if (!node.right) {
+        return node.data;
+      }
+
+      return maxNode(node.right);
+    }
   }
 }
 
