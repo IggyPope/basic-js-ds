@@ -124,8 +124,19 @@ class BinarySearchTree {
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.rootNode) {
+      return null;
+    }
+
+    return minNode(this.rootNode);
+
+    function minNode(node) {
+      if (!node.left) {
+        return node.data;
+      }
+
+      return minNode(node.left);
+    }
   }
 
   max() {
